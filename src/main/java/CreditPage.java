@@ -1,4 +1,6 @@
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -8,7 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.allure.annotations.Step;
 
+import java.sql.Driver;
 import java.util.function.Function;
 
 public class CreditPage  {
@@ -16,15 +20,15 @@ public class CreditPage  {
     By estateCost = By.xpath("//input[@id='estateCost']");
     By initialFee = By.xpath("//input[@id='initialFee']");
     By creditTerm = By.xpath("//input[@id='creditTerm']");
-    By paidToCard = By.xpath("//input[@data-test-id='paidToCard']");
-    By canConfirmIncome = By.xpath("//input[@data-test-id='canConfirmIncome']");
-    By youngFamilyDiscount = By.xpath("//input[@data-test-id='youngFamilyDiscount']");
-    /*  By amountOfCredit = By.xpath("//div[@data-test-id = amountOfCredit]");
-    By mounthlyPayment = By.xpath("//div[@data-test-id = mounthlyPayment]");
-    By requiredIncome = By.xpath("//div[@data-test-id = requiredIncome]");
-    By rate = By.xpath("//div[@data-test-id = rate]");
+    By paidToCard = By.xpath("//input[@data-test-id='paidToCard']/..");//input[@data-test-id='paidToCard']/..
+    By canConfirmIncome = By.xpath("//input[@data-test-id='canConfirmIncome']/..");
+    By youngFamilyDiscount = By.xpath("//input[@data-test-id='youngFamilyDiscount']/..");
+    By amountOfCredit = By.xpath("//span[@data-test-id = 'amountOfCredit']");
+    By monthlyPayment = By.xpath("//span[@data-test-id = 'monthlyPayment']");
+    By requiredIncome = By.xpath("//span[@data-test-id = 'requiredIncome']");
+    By rate = By.xpath("//span[@data-test-id = 'rate']");
 
-    */
+
 
    WebDriver driver;
 
@@ -32,9 +36,11 @@ public class CreditPage  {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
+    @Step("Заполнеие формы: Полная цена - , Первоначальный взнос - , Срок кредита - ")
+    public void writeForm(String fullPrice, String  pay, String period) {
 
-    public void writeForm(String fullPrice, String  pay, String period){
         driver.switchTo().frame("iFrameResizer0");
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(estateCost));
         driver.findElement(estateCost).clear();
         driver.findElement(estateCost).sendKeys(fullPrice);
         waitingChenge(initialFee);
@@ -43,17 +49,31 @@ public class CreditPage  {
         driver.findElement(creditTerm).clear();
         driver.findElement(creditTerm).sendKeys(period);
 
+    }
+    @Step("Выбрать: Нет зарплатной карты; есть возможность подтвердить доход; молодая семья")
+        public void press(){
+
+    ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",driver.findElement(creditTerm) );
+
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(paidToCard)).build().perform();
+
         Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
-        if(driver.findElement(paidToCard).isSelected()){
-           driver.findElement(By.xpath("//input[@data-test-id='paidToCard']/following-sibling::*[contains(@class, 'icon')]")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(paidToCard)));
+        if(driver.findElement(By.xpath("//input[@data-test-id='paidToCard']")).isSelected()){
+           driver.findElement(paidToCard).click();
+
         }
+
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(canConfirmIncome)));
-        if(!driver.findElement(canConfirmIncome).isSelected()){
+       if(!driver.findElement(By.xpath("//input[@data-test-id='canConfirmIncome']")).isSelected()){
             driver.findElement(canConfirmIncome).click();
         }
-        if(!driver.findElement(youngFamilyDiscount).isSelected()){
+
+        if(!driver.findElement(By.xpath("//input[@data-test-id='youngFamilyDiscount']")).isSelected()){
             driver.findElement(youngFamilyDiscount).click();
         }
+        driver.switchTo().defaultContent();
 
     }
 
@@ -70,26 +90,14 @@ public class CreditPage  {
         WebDriverWait wait = new WebDriverWait(driver, 5000);
         wait.until(valueChanged);
     }
-
-    /*public void putChekBox(){
-       // Actions actions = new Actions(driver);
-       driver.switchTo().frame("iFrameResizer0");
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
-        if(driver.findElement(paidToCard).isSelected()){
-          //  actions.moveToElement(driver.findElement(By.xpath("//input[@data-test-id='paidToCard']/../.."))).click().perform();
-            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//input[@data-test-id='paidToCard']/../.."))));
-            driver.findElement(By.xpath("//input[@data-test-id='paidToCard']/../..")).click();
-        }
-
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(canConfirmIncome)));
-        if(!driver.findElement(canConfirmIncome).isSelected()){
-            driver.findElement(By.xpath("//input[@data-test-id='canConfirmIncome']/../..")).click();
-        }
-        if(!driver.findElement(youngFamilyDiscount).isSelected()){
-            driver.findElement(By.xpath("//input[@data-test-id='youngFamilyDiscount']/../..")).click();
-        }
+    @Step("Проверить: Кредит = , Ежемесячный платёж = , Минимальная зп = , Процентная ставка =  ")
+    public void check(String sum, String mounth, String min, String pc){
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath("//h2[contains(text(),'Рассчитайте ипотеку')]")) );
+        driver.switchTo().frame("iFrameResizer0");
+        Assert.assertEquals("Сумма кредита", driver.findElement(amountOfCredit).getAttribute("textContent"), sum);
+        Assert.assertEquals("Ежемесячный платеж", driver.findElement(monthlyPayment).getAttribute("textContent"), mounth);
+        Assert.assertEquals("Минимальная ЗП", driver.findElement(requiredIncome).getAttribute("textContent"), min);
+        Assert.assertEquals("Процентная ставка", driver.findElement(rate).getAttribute("textContent"), pc);
     }
-
-     */
 
 }
