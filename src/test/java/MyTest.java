@@ -14,7 +14,7 @@ static WebDriver driver;
             driver = new ChromeDriver();
             driver.get(TestProperties.getInstance().getProperty("url"));
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            Trash.driver = driver;
+            BasePage.driver = driver;
         }
 
        @Test

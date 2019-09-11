@@ -88,12 +88,12 @@ public class CreditPage  {
         WebDriverWait wait = new WebDriverWait(driver, 5000);
         wait.until(valueChanged);
     }
-    @Step("Проверить: Кредит = , Ежемесячный платёж = , Минимальная зп = , Процентная ставка =  ")
-    public void check(String sum, String mounth, String min, String pc){
+    @Step("Проверить: Кредит =  , Ежемесячный платёж = , Минимальная зп = , Процентная ставка =  ")
+    public void check(String sum, String month, String min, String pc){
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",driver.findElement(By.xpath("//h2[contains(text(),'Рассчитайте ипотеку')]")) );
         driver.switchTo().frame("iFrameResizer0");
         Assert.assertEquals("Сумма кредита", driver.findElement(amountOfCredit).getAttribute("textContent"), sum);
-        Assert.assertEquals("Ежемесячный платеж", driver.findElement(monthlyPayment).getAttribute("textContent"), mounth);
+        Assert.assertEquals("Ежемесячный платеж", driver.findElement(monthlyPayment).getAttribute("textContent"), month);
         Assert.assertEquals("Минимальная ЗП", driver.findElement(requiredIncome).getAttribute("textContent"), min);
         Assert.assertEquals("Процентная ставка", driver.findElement(rate).getAttribute("textContent"), pc);
     }
