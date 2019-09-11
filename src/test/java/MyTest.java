@@ -23,9 +23,10 @@ static WebDriver driver;
       mainPage.search();
       CreditPage creditPage = new CreditPage(driver);
       creditPage.writeForm("5180000", "3058000","30");
+      creditPage.press();
+      creditPage.check("2 122 000 \u20BD", "18 466 \u20BD", "30 776 \u20BD", "11 %");
 
-      //до сюда работает как надо(пока что)
-      // creditPage.putChekBox();
+
 
 
 
