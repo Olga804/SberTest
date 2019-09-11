@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
 
-import java.sql.Driver;
 import java.util.function.Function;
 
 public class CreditPage  {
@@ -28,14 +27,13 @@ public class CreditPage  {
     By requiredIncome = By.xpath("//span[@data-test-id = 'requiredIncome']");
     By rate = By.xpath("//span[@data-test-id = 'rate']");
 
-
-
    WebDriver driver;
 
     public CreditPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
+
     @Step("Заполнеие формы: Полная цена - , Первоначальный взнос - , Срок кредита - ")
     public void writeForm(String fullPrice, String  pay, String period) {
 
@@ -51,9 +49,9 @@ public class CreditPage  {
 
     }
     @Step("Выбрать: Нет зарплатной карты; есть возможность подтвердить доход; молодая семья")
-        public void press(){
+    public void press(){
 
-    ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",driver.findElement(creditTerm) );
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",driver.findElement(creditTerm) );
 
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(paidToCard)).build().perform();
@@ -61,12 +59,12 @@ public class CreditPage  {
         Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(paidToCard)));
         if(driver.findElement(By.xpath("//input[@data-test-id='paidToCard']")).isSelected()){
-           driver.findElement(paidToCard).click();
+            driver.findElement(paidToCard).click();
 
         }
 
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(canConfirmIncome)));
-       if(!driver.findElement(By.xpath("//input[@data-test-id='canConfirmIncome']")).isSelected()){
+        if(!driver.findElement(By.xpath("//input[@data-test-id='canConfirmIncome']")).isSelected()){
             driver.findElement(canConfirmIncome).click();
         }
 

@@ -7,9 +7,8 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
 
-import javax.swing.*;
-
 public class MainPage extends BasePage {
+
     @FindBy(xpath = "//button[contains(@aria-label,'Ипотека')]")
     private WebElement searchTextField;
 
@@ -27,6 +26,4 @@ public class MainPage extends BasePage {
         searchButton.click();
 
     }
-
 }
-

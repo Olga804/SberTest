@@ -14,19 +14,17 @@ static WebDriver driver;
             driver = new ChromeDriver();
             driver.get(TestProperties.getInstance().getProperty("url"));
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            
+            Trash.driver = driver;
         }
 
        @Test
     public void ipoteka(){
-      MainPage mainPage = new MainPage();
-      mainPage.search();
-      CreditPage creditPage = new CreditPage(driver);
-      creditPage.writeForm("5180000", "3058000","30");
-      creditPage.press();
-      creditPage.check("2 122 000 \u20BD", "18 466 \u20BD", "30 776 \u20BD", "11 %");
-
-
+           MainPage mainPage = new MainPage();
+           mainPage.search();
+           CreditPage creditPage = new CreditPage(driver);
+           creditPage.writeForm("5180000", "3058000","30");
+           creditPage.press();
+           creditPage.check("2 122 000 \u20BD", "18 466 \u20BD", "30 776 \u20BD", "11 %");
 
 
 
