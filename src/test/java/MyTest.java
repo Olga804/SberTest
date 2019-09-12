@@ -1,3 +1,4 @@
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -30,5 +31,11 @@ static WebDriver driver;
 
 
        }
+   @AfterClass
+    public static void tearDown() throws Exception {
+        driver.quit();
+    }
+
+
 
 }

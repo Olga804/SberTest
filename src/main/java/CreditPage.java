@@ -40,8 +40,9 @@ public class CreditPage  {
         driver.switchTo().frame("iFrameResizer0");
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(estateCost));
         driver.findElement(estateCost).clear();
+        String oldValue = driver.findElement(initialFee).getAttribute("value");
         driver.findElement(estateCost).sendKeys(fullPrice);
-        waitingChenge(initialFee);
+        waitingChenge(oldValue,initialFee,"value");
         driver.findElement(initialFee).clear();
         driver.findElement(initialFee).sendKeys(pay);
         driver.findElement(creditTerm).clear();
@@ -69,19 +70,20 @@ public class CreditPage  {
         }
 
         if(!driver.findElement(By.xpath("//input[@data-test-id='youngFamilyDiscount']")).isSelected()){
+           String oldValue = driver.findElement(requiredIncome).getAttribute("textContent");
             driver.findElement(youngFamilyDiscount).click();
+            waitingChenge(oldValue,requiredIncome,"textContent");
         }
         driver.switchTo().defaultContent();
 
     }
 
 
-    public void waitingChenge(By by){
-        String oldValue = driver.findElement(by).getAttribute("value");
+    public void waitingChenge(String oldValue,By what, String atribut){
         Function<? super WebDriver, Object> valueChanged = new ExpectedCondition<Object>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
-                return !webDriver.findElement(by).getAttribute("value").equals(oldValue);
+                return !webDriver.findElement(what).getAttribute(atribut).equals(oldValue);
             }
         };
         //действие для изменения значения
