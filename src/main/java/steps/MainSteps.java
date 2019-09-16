@@ -7,10 +7,11 @@ import pages.MainPage;
 
 
 public class MainSteps {
-    MainPage mainPage = new MainPage();
+//    MainPage mainPage = new MainPage();
 
     @Step("Навести на ипотека, дождаться появления выпадающего меню, нажать ипотека на готовое жилье")
     public void search(){
-        mainPage.search();
+
+        new MainPage().search();
     }
 }

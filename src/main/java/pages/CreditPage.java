@@ -55,17 +55,14 @@ public class CreditPage extends BasePage{
         Actions actions = new Actions(driver);
         actions.moveToElement(driver.findElement(paidToCard)).build().perform();
 
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 15, 3000);
         wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(paidToCard)));
-        if(driver.findElement(By.xpath("//input[@data-test-id='paidToCard']")).isSelected()){
             driver.findElement(paidToCard).click();
 
-        }
 
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(canConfirmIncome)));
-        if(!driver.findElement(By.xpath("//input[@data-test-id='canConfirmIncome']")).isSelected()){
             driver.findElement(canConfirmIncome).click();
-        }
+
 
         if(!driver.findElement(By.xpath("//input[@data-test-id='youngFamilyDiscount']")).isSelected()){
             String oldValue = driver.findElement(requiredIncome).getAttribute("textContent");
