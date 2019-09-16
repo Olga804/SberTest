@@ -7,6 +7,7 @@ import pages.CreditPage;
 
 public class CreditSteps {
     CreditPage creditPage = new CreditPage();
+    ScenarioSteps scenarioSteps = new ScenarioSteps();
 
     @Step("Заполнить формы; Стоимость недвижимости = {fullPrice}, Первоначальный взнос = {pay}, Срок кредита = {period}")
     public void writeForm(String fullPrice, String  pay, String period){
@@ -19,7 +20,7 @@ public class CreditSteps {
     }
 
     @Step("Проверить: поле сумма кредита = {sum}, ежемесячный платеж = {month}, необходимый доход = {min}, процентная ставка = {pc}")
-    public void chek(String sum, String month, String min, String pc){
+    public void check(String sum, String month, String min, String pc){
         creditPage.check(sum, month, min, pc);
     }
 }

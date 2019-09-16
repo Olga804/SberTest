@@ -7,14 +7,10 @@ import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import util.TestProperties;
-
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BaseSteps {
     private static WebDriver driver;
-    private static String baseURL;
-    private static Properties properties = TestProperties.getInstance().getProperties();
 
     public static WebDriver getDriver(){
         return driver;

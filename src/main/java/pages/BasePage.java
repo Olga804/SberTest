@@ -22,14 +22,5 @@ public class BasePage {
 
     */
 
-    public void fillField(WebElement element, String value){
-        element.clear();
-        element.sendKeys(value);
-    }
-     public void click(WebElement element){
-         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(false)", element);
-         Wait<WebDriver>wait = new WebDriverWait(driver, 15);
-         wait.until(ExpectedConditions.elementToBeClickable(element));
-         element.click();
-     }
+
 }

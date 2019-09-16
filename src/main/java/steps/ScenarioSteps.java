@@ -4,31 +4,29 @@ import io.cucumber.java.ru.Когда;
 
 import io.cucumber.java.ru.Тогда;
 
-import pages.CreditPage;
-import pages.MainPage;
 
 public class ScenarioSteps {
 
-    MainPage mainPage = new MainPage();
-    @Когда("^Навести на ипотека, дождаться появления выпадающего меню, нажать ипотека на готовое жилье")
+    MainSteps mainSteps = new MainSteps();
+    @Когда("^Навести на ипотека, дождаться появления выпадающего меню, нажать ипотека на готовое жилье$")
     public void search(){
-        mainPage.search();
+        mainSteps.search();
     }
 
-    CreditPage creditPage = new CreditPage();
+    CreditSteps creditSteps = new CreditSteps();
 
-    @Когда("^Заполнить формы; Стоимость недвижимости = \"(.+)\"$, Первоначальный взнос = \"(.+)\"$, Срок кредита = \"(.+)\"$")
+    @Когда("^Заполнить формы; Стоимость недвижимости = \"(.+)\", Первоначальный взнос = \"(.+)\", Срок кредита = \"(.+)\"$")
     public void writeForm(String fullPrice, String  pay, String period){
-        creditPage.writeForm(fullPrice,pay,period);
+        creditSteps.writeForm(fullPrice,pay,period);
     }
 
-    @Когда("^Нажать: нет зарплатной карты сбербанка, дождаться появления есть возможность подтвердить доход, нажать молодая семья")
+    @Когда("^Нажать: нет зарплатной карты сбербанка, дождаться появления есть возможность подтвердить доход, нажать молодая семья$")
     public void press(){
-        creditPage.press();
+        creditSteps.press();
     }
 
-    @Тогда("^Проверить: поле сумма кредита = \"(.+)\"$, ежемесячный платеж = \"(.+)\"$, необходимый доход = \"(.+)\"$, процентная ставка = \"(.+)\"$")
-    public void chek(String sum, String month, String min, String pc){
-        creditPage.check(sum, month, min, pc);
+    @Тогда("^Проверить: поле сумма кредита = \"(.+)\", ежемесячный платеж = \"(.+)\", необходимый доход = \"(.+)\", процентная ставка = \"(.+)\"$")
+    public void check(String sum, String month, String min, String pc){
+        creditSteps.check(sum, month, min, pc);
     }
 }
