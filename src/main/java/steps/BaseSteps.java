@@ -5,6 +5,7 @@ package steps;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.qameta.allure.Attachment;
+import javafx.application.Application;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -32,12 +33,14 @@ public class BaseSteps {
     @After
     public static void tearDown() throws Exception{
         driver.quit();
+
     }
 
     @Attachment(type = "image/png", value = "Screenshot")
     public static byte[] takeScreenshot() {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) BaseSteps.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
+
 
 
 }
